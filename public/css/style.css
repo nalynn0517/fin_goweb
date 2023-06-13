@@ -1,0 +1,43 @@
+.info-window {
+    width: 200px;
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .info-window .title {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .title-close-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    margin-right: 80px; 
+}
+
+.close-button {
+    cursor: pointer;
+    font-size: 5px;
+    margin-bottom: 10px;
+}
+
+  .info-window .address,
+  .info-window .phone {
+    margin-bottom: 3px;
+  }
+  
+  .info-window .phone {
+    color: #888;
+  }
+  
+  .info-window .phone:before {
+    content: "Phone: ";
+  }
+  
+  

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>지역별 카페 위치</title>
+    <style>
+        #map {
+            width: 1200px;
+            height: 500px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <h1 style="font-size:140%; text-align:center">지역별 카페 위치 가이드</h1>
+    <div style="display: flex; justify-content: space-between;">
+        <div style="display: inline-block">
+            <button class="regionBtn" data-region="서울" style="background-color: rgb(229, 100, 100);">서울</button>
+            <button class="regionBtn" data-region="경기" style="background-color: rgb(96, 173, 96);">경기</button>
+            <button class="regionBtn" data-region="강원" style="background-color: rgb(185, 185, 185);">강원</button>
+            <button class="regionBtn" data-region="충북" style="background-color: rgb(135, 235, 188);">충북</button>
+            <button class="regionBtn" data-region="충남" style="background-color: #cd91ff;">충남</button>
+            <button class="regionBtn" data-region="경북" style="background-color: rgb(91, 157, 255);">경북</button>
+            <button class="regionBtn" data-region="경남" style="background-color: rgb(255, 218, 137);">경남</button>
+            <button class="regionBtn" data-region="전북" style="background-color: rgb(255, 128, 38);">전북</button>
+            <button class="regionBtn" data-region="전남" style="background-color: pink;">전남</button>
+        </div>
+        <div>
+            <input type="text" id="searchInput" placeholder="검색 키워드 입력">
+            <button id="searchBtn">검색</button>
+        </div>
+    </div>
+    <div style="margin-top:10px;" id="map"></div>
+
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=c25713039132a67715b4ed0e6334ef05&libraries=services"></script>
+    <script src="main.js"></script>
+    <script>
+        var coords = {
+            '서울': {
+                position: new kakao.maps.LatLng(37.5665, 126.9780),
+                cafes: [
+                    { position: new kakao.maps.LatLng(37.566566, 126.983924), title: "커피스미스", address: "서울 강남구 테헤란로8길 25 커피스미스빌딩 1층", phone: "02-566-6740" },
+                    { position: new kakao.maps.LatLng(37.498084, 127.028600), title: "블루보틀", address: "서울 강남구 테헤란로 129 강남N타워 1층", phone: "1533-6906" },
+                    { position: new kakao.maps.LatLng(37.558882, 127.032082), title: "쎈느", address: "서울 성동구 연무장5길 20 1,2층", phone: "02-469-2122" }
+                ],
+                image: {
+                    src: 'image/m1.png',
+                    size: new kakao.maps.Size(35, 35) // 마커 이미지의 크기 설정
+                }
+            },
+            '경기': {
+                position: new kakao.maps.LatLng(37.4138, 127.5183),
+                cafes: [
+                    { position: new kakao.maps.LatLng(37.3832, 127.1268), title: "카페랄로", address: "경기 용인시 수지구 신봉1로369번길 5", phone: "031-272-4324" },
+                    { position: new kakao.maps.LatLng(37.389935, 127.284343), title: "몽쥬이에", address: "경기 광주시 남한산성면 남한산성로 227-31 1,2층", phone: "031-736-1777" },
+                    { position: new kakao.maps.LatLng(37.340573, 126.823667), title: "발리다", address: "경기 안산시 단원구 구봉타운길 57 1,2층", phone: "0507-1435-5909" }
+                ],
+                image: {
+                    src: 'image/m2.png',
+                    size: new kakao.maps.Size(35, 35) // 마커 이미지의 크기 설정
+                }
+            },
+            '강원': {
+                position: new kakao.maps.LatLng(37.8228, 128.1555),
+                cafes: [
+                    { position: new kakao.maps.LatLng(37.868961, 127.714388), title: "산토리니", address: "강원 춘천시 동면 순환대로 1154-97", phone: "033-242-3010" },
+                    { position: new kakao.maps.LatLng(37.760699, 127.752040), title: "분덕스", address: "강원 춘천시 남산면 충효로 94", phone: "0507-1338-5374" },
+                    { position: new kakao.maps.LatLng(38.090590, 128.626750), title: "다비도프카페", address: "강원 양양군 손양면 선사유적로 678", phone: "033-670-3770" }
+                ],
+                image: {
+                    src: 'image/m3.png',
+                    size: new kakao.maps.Size(35, 35) // 마커 이미지의 크기 설정
+                }
+            },
+            '충북': {
+                position: new kakao.maps.LatLng(36.6356, 127.4912),
+                cafes: [
+                    { position: new kakao.maps.LatLng(36.879628, 127.631895), title: "카페이목", address: "충북 음성군 삼성면 대청로 189", phone: "010-4495-5449" },
+                    { position: new kakao.maps.LatLng(36.632865, 127.455660), title: "로이작업실", address: "충북 청주시 서원구 내수동로108번길 47 1~3층", phone: "043-902-5277" },
+                    { position: new kakao.maps.LatLng(36.629048, 127.414581), title: "스트라우스", address: "충북 청주시 흥덕구 내수동로 43", phone: "043-271-7200" }
+                ],
+                image: {
+                    src: 'image/m4.png',
+                    size: new kakao.maps.Size(45, 45) // 마커 이미지의 크기 설정
+                }
+            },
+            '충남': {
+                position: new kakao.maps.LatLng(36.6588, 126.6728),
+                cafes: [
+                    { position: new kakao.maps.LatLng(36.897800, 126.902720), title: "로드1950카페", address: "충남 당진시 신평면 매산로 170", phone: "041-363-1950" },
+                    { position: new kakao.maps.LatLng(36.447133, 127.206489), title: "바드카페챔버홀", address: "충남 공주시 유구읍 시장길 33-2", phone: "041-841-2224" },
+                    { position: new kakao.maps.LatLng(36.095774, 127.594668), title: "카페흰바우", address: "충남 금산군 부리면 창평3길 4", phone: "010-5960-1666" }
+                ],
+                image: {
+                    src: 'image/m5.png',
+                    size: new kakao.maps.Size(35, 35) // 마커 이미지의 크기 설정
+                }
+            },
+            '경북': {
+                position: new kakao.maps.LatLng(36.4919, 128.8889),
+                cafes: [
+                    { position: new kakao.maps.LatLng(36.408582, 128.155284), title: "소쿠리안", address: "경북 상주시 북천로 53", phone: "010-9419-6692" },
+                    { position: new kakao.maps.LatLng(35.934283, 128.858075), title: "카페507", address: "경북 경산시 압량읍 인안길20길 81", phone: "070-4122-5072" },
+                    { position: new kakao.maps.LatLng(35.899542, 129.183935), title: "카페안길", address: "경북 경주시 천북면 화산안길 11-17", phone: "   010-8383-1231" }
+                ],
+                image: {
+                    src: 'image/m6.png',
+                    size: new kakao.maps.Size(35, 35) // 마커 이미지의 크기 설정
+                }
+            },
+            '경남': {
+                position: new kakao.maps.LatLng(35.4606, 128.2132),
+                cafes: [
+                    { position: new kakao.maps.LatLng(34.845327, 128.432183), title: "바이사이드", address: "경남 통영시 항남1길 12", phone: "010-3133-8661" },
+                    { position: new kakao.maps.LatLng(34.877669, 128.719146), title: "온더선", address: "경남 거제시 사등면 성포로 65 1~3층", phone: "010-2799-1133" },
+                    { position: new kakao.maps.LatLng(35.141355, 128.683879), title: "SD카페", address: "경남 창원시 진해구 수도로 22", phone: "055-552-9005" }
+                ],
+                image: {
+                    src: 'image/m7.png',
+                    size: new kakao.maps.Size(45, 45) // 마커 이미지의 크기 설정
+                }
+            },
+            '전북': {
+                position: new kakao.maps.LatLng(35.7167, 127.1444),
+                cafes: [
+                    { position: new kakao.maps.LatLng(35.965639, 127.219384), title: "카페리보키", address: "전북 완주군 구이면 신뱅이길 60-7", phone: "063-228-8826" },
+                    { position: new kakao.maps.LatLng(35.909091, 127.149839), title: "소양한옥티롤", address: "전북 완주군 소양면 전진로 1007", phone: "063-242-1720" },
+                    { position: new kakao.maps.LatLng(35.857208, 127.118135), title: "예쁜하루", address: "전북 전주시 덕진구 권삼득로 333 원플러스상가 1층 110호", phone: "063-277-8179" }
+                ],
+                image: {
+                    src: 'image/m8.png',
+                    size: new kakao.maps.Size(35, 35) // 마커 이미지의 크기 설정
+                }
+            },
+            '전남': {
+                position: new kakao.maps.LatLng(34.8679, 126.9910),
+                cafes: [
+                    { position: new kakao.maps.LatLng(35.309794, 126.987569), title: "소예르", address: "전남 담양군 담양읍 지침6길 78-6 1,2동", phone: "061-383-5819" },
+                    { position: new kakao.maps.LatLng(34.727570, 127.052158), title: "카페모던", address: "전남 보성군 회천면 우암길 27-60", phone: "061-852-3669" },
+                    { position: new kakao.maps.LatLng(34.752559, 127.762853), title: "모이핀", address: "전남 여수시 돌산읍 무술목길 50", phone: "0507-1477-6003" }
+                ],
+                image: {
+                    src: 'image/m9.png',
+                    size: new kakao.maps.Size(35, 35) // 마커 이미지의 크기 설정
+                }
+            }
+        };    
+        </script>
+    </body>
+</html>
