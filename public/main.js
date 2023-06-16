@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
             level: 3 // 지도의 확대 레벨
         };
 
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
         
-        // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성합니다
+        // 지도 확대 축소를 제어할 수 있는 줌 컨트롤 생성
         var zoomControl = new kakao.maps.ZoomControl();
         map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
@@ -38,11 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
         function moveMapToRegion(region) {
             bounds = new kakao.maps.LatLngBounds(); // bounds 변수 초기화
             map.setCenter(coords[region].position);
-            map.setLevel(4); // 추가: 지도의 확대 레벨 설정
+            map.setLevel(4); // 지도의 확대 레벨 설정
 
             if (markers[region]) {
                 markers[region].forEach(function(marker) {
-                    marker.setMap(map); // 수정: 마커를 지도에 표시
+                    marker.setMap(map); // 마커를 지도에 표시
                 });
             } else {
                 markers[region] = [];
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 map.setBounds(bounds); // 검색 결과가 없을 때 기존의 지도 범위로 돌아감
             } else {
                 map.setBounds(searchBounds);
-                map.setLevel(5);
+                map.setLevel(20);
 
                 // 검색 결과가 있을 때에만 마커와 인포윈도우 생성
                 searchMarkers.forEach(function(marker) {
